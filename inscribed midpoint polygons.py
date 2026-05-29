@@ -42,7 +42,6 @@ def midpoint_inscription_ntimes(input_shape: list[tuple[float,float]], n: int) -
         print(current)
         plt.plot(points_to_table(current)[0], points_to_table(current)[1], marker='.')
 
-    plt.show()
     return(current)
 
 def lists_rounded_equal_w_cycle(list1: list[float], list2: list[float]) -> bool:
@@ -80,16 +79,24 @@ def shapes_are_similar(input1: list[tuple[float,float]], input2: list[tuple[floa
     side_ratios1 = []
     side_ratios2 = []
 
+    all_side_lengths1 = []
+    all_side_lengths2 = []
+
+    for i in range(len(input1)):
+        all_side_lengths1.append(get_distance(e_input1[i], e_input1[i+1]))
+        all_side_lengths2.append(get_distance(e_input2[i], e_input2[i+1]))
+
+    smallest_side_length1 = min(all_side_lengths1)
+    smallest_side_length2 = min(all_side_lengths2)
+    
+
     for i in range(len(input1)):
 
-        first_side_length1 = get_distance(e_input1[0], e_input1[1])
         current_side_length1 = get_distance(e_input1[i], e_input1[i+1])
-
-        first_side_length2 = get_distance(e_input2[0], e_input2[1])
         current_side_length2 = get_distance(e_input2[i], e_input2[i+1])
 
-        side_ratios1.append(first_side_length1 / current_side_length1) 
-        side_ratios2.append(first_side_length2 / current_side_length2) 
+        side_ratios1.append(smallest_side_length1 / current_side_length1) 
+        side_ratios2.append(smallest_side_length2 / current_side_length2) 
         
 
     angles1 = []
@@ -101,13 +108,13 @@ def shapes_are_similar(input1: list[tuple[float,float]], input2: list[tuple[floa
        bc1 = get_distance(e_input1[i+1], e_input1[i+2])
        ca1 = get_distance(e_input1[i+2], e_input1[i])
 
-       cosx1 = ((ab1 ** 2) + (bc1 ** 2) - (ca1 ** 2)) / (2 * ab1 * ca1)
+       cosx1 = ((ab1 ** 2) + (bc1 ** 2) - (ca1 ** 2)) / (2 * ab1 * bc1)
 
        ab2 = get_distance(e_input1[i], e_input1[i+1])
        bc2 = get_distance(e_input1[i+1], e_input1[i+2])
        ca2 = get_distance(e_input1[i+2], e_input1[i])
 
-       cosx2 = ((ab2 ** 2) + (bc2 ** 2) - (ca2 ** 2)) / (2 * ab2 * ca2)
+       cosx2 = ((ab2 ** 2) + (bc2 ** 2) - (ca2 ** 2)) / (2 * ab2 * bc2)
 
        angles1.append(math.acos(cosx1))
        angles2.append(math.acos(cosx2))
@@ -116,22 +123,24 @@ def shapes_are_similar(input1: list[tuple[float,float]], input2: list[tuple[floa
 
 
 
-
-
 square = [(0,0), (1,0), (1,1), (0,1)]
 
 #print(midpoint_inscription_ntimes(square, 5))
 
-triangle = [(5,6), (12, 32), (34, 124)]
+triangle = [
+    (6, 7),
+    (3, 12),
+    (1, 3)
+]
+
+parallelogram = [
+    (0, 0),
+    (3, 0),
+    (5, 2),
+    (2, 2)
+]
+
 
 print(shapes_are_similar(triangle, midpoint_inscription_ntimes(triangle,1)))
 
-#new = midpoint_inscription(square)
-
-#square_transformed = points_to_table(square)
-#new_transformed = points_to_table(new)
-
-#plt.plot(new_transformed[0], new_transformed[1], marker='o')
-#plt.plot(square_transformed[0], square_transformed[1], marker='o')
-          
-#plt.show()
+plt.show()
