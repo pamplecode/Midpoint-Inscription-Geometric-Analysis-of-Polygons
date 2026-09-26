@@ -1,2 +1,2 @@
 # Midpoint-Inscription-Geometric-Analysis-of-Polygons
-As the name says
+Plotting n times midpoint inscription of polygons
